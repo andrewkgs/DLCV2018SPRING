@@ -15,7 +15,7 @@ def mean_face(X, shape, save):
         print('< {} saved >\n'.format(save_name))
 
 
-def eigenface(X, shape, eigen_num, save):
+def eigen_face(X, shape, eigen_num, save):
     mean = np.mean(X, axis=0)
     X_center = X - mean
     U, S, V = np.linalg.svd(X_center.T, full_matrices=False)
@@ -26,7 +26,7 @@ def eigenface(X, shape, eigen_num, save):
             eigen -= np.min(eigen)
             eigen /= np.max(eigen)
             eigen *= 255
-            save_name = 'eigenface' + str(i+1) + '.png'
+            save_name = 'eigen_face_' + str(i+1) + '.png'
             io.imsave(output_path + save_name, eigen.reshape(shape).astype(np.uint8))
             print('< {} saved >\n'.format(save_name))
 
@@ -42,7 +42,7 @@ def reconstruct(X, X_target, shape, eigen_num, save):
     if save:
         recon = mean + np.dot(weight, U[:, :eigen_num].T)
         print('MSE of reconstructed image for n = {} : {}'.format(eigen_num, MSE(X_target, recon)))
-        save_name = 'reconstruct' + str(eigen_num)+ '.png'
+        save_name = 'reconstruct_' + str(eigen_num)+ '.png'
         io.imsave(output_path + save_name, recon.reshape(shape).astype(np.uint8))
         print('< {} saved >\n'.format(save_name))
     return weight
@@ -136,9 +136,9 @@ if __name__ == "__main__":
     mean_face(train_image, shape, True)
 
 
-    ### Generate the first three eigenfaces ###
+    ### Generate the first three eigen faces ###
 
-    eigenface(train_image, shape, 3, True)
+    eigen_face(train_image, shape, 3, True)
 
 
     ### Generate reconstructed images ###
