@@ -40,7 +40,7 @@ def reconstruct(X, X_target, shape, eigen_num, save):
     weight = np.dot(X_target_center, U[:, :eigen_num])
 
     if save:
-        recon = mean + np.dot(weight, U[:, :eigen_num].T)
+        recon = (mean + np.dot(weight, U[:, :eigen_num].T))
         print('MSE of reconstructed image for n = {} : {}'.format(eigen_num, MSE(X_target, recon)))
         save_name = 'reconstruct_' + str(eigen_num)+ '.png'
         io.imsave(output_path + save_name, recon.reshape(shape).astype(np.uint8))
@@ -50,7 +50,7 @@ def reconstruct(X, X_target, shape, eigen_num, save):
 
 def MSE(X_org, X_rec):
     diff = np.abs(X_org - X_rec)
-    return np.sum((diff ** 2)) / X_org.shape[0]
+    return (diff ** 2).mean()
 
 
 def train_and_valid(image_f1, image_f2, image_f3, label_f1, label_f2, label_f3, clf_train, n):
