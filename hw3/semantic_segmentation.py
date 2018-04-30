@@ -1,11 +1,9 @@
 from keras.layers import Input, Conv2D, MaxPooling2D, Dropout, Conv2DTranspose, Reshape, Activation, Add
-from keras.initializers import Constant
 from keras.models import Model
 from keras.regularizers import l2
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint
-from keras.utils.vis_utils import plot_model
-from keras import backend as K
+#from keras.utils.vis_utils import plot_model
 from scipy.misc import imread, imsave
 import os
 import re
