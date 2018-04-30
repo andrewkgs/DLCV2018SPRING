@@ -7,6 +7,12 @@
 Perform semantic segmentation which predicts a label to each pixel on the aerial photograph dataset.
 
 
+## Toolkit requirements
+[![Python version](https://img.shields.io/badge/Python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![TensorFlow version](https://img.shields.io/badge/TensorFlow-1.6.0-green.svg)](https://pypi.python.org/pypi/tensorflow/1.6.0)
+[![Keras version](https://img.shields.io/badge/Keras-2.1.5-green.svg)](https://pypi.python.org/pypi/Keras/2.1.5)
+
+
 ## Execution Commands
 
 ### Training
