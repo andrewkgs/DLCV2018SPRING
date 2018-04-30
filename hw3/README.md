@@ -8,6 +8,19 @@ Perform semantic segmentation which predicts a label to each pixel on the aerial
 
 
 ## Execution Commands
+
+### Training
+* For baseline model (VGG16-FCN32s):
+```
+python3 semantic_segmentation.py VGG16-FCN32s --train_data_dir=<training images directory> --valid_data_dir=<validation images directory> --batch_size=<batch size> --epochs=<training epochs> --model_dir=<saved model directory>
+```
+
+* For improved model (VGG16-FCN16s):
+```
+python3 semantic_segmentation.py VGG16-FCN16s --train_data_dir=<training images directory> --valid_data_dir=<validation images directory> --batch_size=<batch size> --epochs=<training epochs> --model_dir=<saved model directory>
+```
+
+### Testing
 * For baseline model (VGG16-FCN32s):
 ```sh
 bash hw3.sh <testing images directory> <output images directory>
@@ -17,4 +30,3 @@ bash hw3.sh <testing images directory> <output images directory>
 ```sh
 bash hw3_best.sh <testing images directory> <output images directory>
 ```
-
