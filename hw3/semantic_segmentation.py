@@ -23,6 +23,7 @@ def SetArgument():
     parser.add_argument('--num_classes', default=7, type=int)
     parser.add_argument('--batch_size', default=2, type=int)
     parser.add_argument('--epochs', default=60, type=int)
+    parser.add_argument('--pretrained_model', default='./vgg16_weights_tf_dim_ordering_tf_kernels.h5', type=str)
     parser.add_argument('--model_dir', default='./new_model/', type=str)
     parser.add_argument('--model_file', default='./model/model.h5', type=str)
     return parser.parse_args()
@@ -170,14 +171,13 @@ def VGG16FCN16s(num_classes):
     return model
 
 
-def train(x_train, y_train, x_valid, y_valid, batch_size, epochs, num_classes, model_dir, which_model):
+def train(x_train, y_train, x_valid, y_valid, batch_size, epochs, num_classes, model_dir, which_model, pretrained_model):
     if which_model == 'VGG16-FCN32s':
         model = VGG16FCN32s(num_classes)
     elif which_model == 'VGG16-FCN16s':
         model = VGG16FCN16s(num_classes)
     
-    weights_path = 'vgg16_weights_tf_dim_ordering_tf_kernels.h5'
-    model.load_weights(weights_path, by_name=True)
+    model.load_weights(pretrained_model, by_name=True)
 
     opt = Adam(lr=1e-4)
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
@@ -240,7 +240,7 @@ if __name__ == '__main__':
             #np.save('./img_npy/y_train.npy', y_train)
             #np.save('./img_npy/x_valid.npy', x_valid)
             #np.save('./img_npy/y_valid.npy', y_valid)
-        train(x_train, y_train, x_valid, y_valid, args.batch_size, args.epochs, args.num_classes, args.model_dir, args.which_model)
+        train(x_train, y_train, x_valid, y_valid, args.batch_size, args.epochs, args.num_classes, args.model_dir, args.which_model, args.pretrained_model)
 
     elif args.action == 'test':
         if not os.path.exists(args.predict_dir):
