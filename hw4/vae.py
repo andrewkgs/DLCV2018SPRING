@@ -102,7 +102,7 @@ if __name__ == '__main__':
     graph = tf.Graph()
     with graph.as_default():
         x_input = tf.placeholder(shape=[None, img_size, img_size, img_channels], dtype=tf.float32, name='x_input')
-        z_input = tf.placeholder(shape=[32, latent_dim], dtype=tf.float32, name='z_input')
+        z_input = tf.placeholder(shape=[None, latent_dim], dtype=tf.float32, name='z_input')
         x_output = tf.placeholder(shape=[None, img_size, img_size, img_channels], dtype=tf.float32, name='x_output')
 
         # ==================== Train ==================== #
