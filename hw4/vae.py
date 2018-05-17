@@ -13,7 +13,7 @@ def SetArgument():
     parser.add_argument('-d', '--data_path', default='./hw4_data/', type=str)
     parser.add_argument('-o', '--output_path', default='./output/', type=str)
     parser.add_argument('-s', '--save_model_dir', default='./save_model/', type=str)
-    parser.add_argument('-l', '--load_model_file', default='./hw4_data/load_model/model_vae.ckpt', type=str)
+    parser.add_argument('-l', '--load_model_file', default='./load_model/model_vae.ckpt', type=str)
     parser.add_argument('--img_size', default=64, type=int)
     parser.add_argument('--img_channels', default=3, type=int)
     parser.add_argument('--epochs', default=400, type=int)
