@@ -20,39 +20,39 @@ bash hw4.sh <absolute path of hw4_data directory> <output directory>
 ```
 
 ### VAE
-* Train
+* Train model
 ```
 python3 vae.py train -d <data path> -s <save model path>
 ```
 
-* Reconstruct
+* Reconstruct images
 ```
 python3 vae.py reconstruct -d <data path> -o <output path> -l <load model path>
 ```
 
-* Generate
+* Generate images
 ```
 python3 vae.py generate -o <output path> -l <load model path>
 ```
 
 ### DCGAN
-* Train
+* Train model
 ```
 python3 dcgan.py train -d <data path> -s <save model path>
 ```
 
-* Generate
+* Generate images
 ```
 python3 dcgan.py train -o <output path> -l <load model path>
 ```
 
 ### ACGAN
-* Train
+* Train model
 ```
 python3 acgan.py train -d <data path> -s <save model path>
 ```
 
-* Generate
+* Generate images
 ```
 python3 acgan.py
 ```
