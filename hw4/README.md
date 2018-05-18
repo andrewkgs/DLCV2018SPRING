@@ -54,5 +54,5 @@ python3 acgan.py train -d <data path> -s <save model path>
 
 * Generate images
 ```
-python3 acgan.py
+python3 acgan.py -o <output path> -l <load model path>
 ```
