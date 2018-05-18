@@ -43,7 +43,7 @@ python3 dcgan.py train -d <data path> -s <save model path>
 
 * Generate
 ```
-python3 vae.py train -o <output path> -l <load model path>
+python3 dcgan.py train -o <output path> -l <load model path>
 ```
 
 ### ACGAN
