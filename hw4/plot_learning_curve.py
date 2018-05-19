@@ -15,28 +15,28 @@ if __name__ == '__main__':
     if not os.path.exists(args.output_path):
         os.makedirs(args.output_path)
 
-    log_1_1 = np.genfromtxt('vae_logs/log_1_KLD.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    log_1_2 = np.genfromtxt('vae_logs/log_1_MSE.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    log_2_1 = np.genfromtxt('dcgan_logs/log_2_G.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    log_2_2 = np.genfromtxt('dcgan_logs/log_2_D.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    log_2_3 = np.genfromtxt('dcgan_logs/log_2_D_r.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    log_2_4 = np.genfromtxt('dcgan_logs/log_2_D_f.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    #log_3_1 = np.genfromtxt('acgan_logs/log_3_.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    #log_3_2 = np.genfromtxt('acgan_logs/log_3_.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    #log_3_3 = np.genfromtxt('acgan_logs/log_3_.csv', delimiter=',', dtype=np.float32)[1:, 1:]
-    #log_3_4 = np.genfromtxt('acgan_logs/log_3_.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    log_1_1 = np.genfromtxt('logs/vae/KLD_loss.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    log_1_2 = np.genfromtxt('logs/vae/MSE_loss.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    log_2_1 = np.genfromtxt('logs/dcgan/G_loss.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    log_2_2 = np.genfromtxt('logs/dcgan/D_loss.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    log_2_3 = np.genfromtxt('logs/dcgan/D_r_loss.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    log_2_4 = np.genfromtxt('logs/dcgan/D_f_loss.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    #log_3_1 = np.genfromtxt('logs/acgan/.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    #log_3_2 = np.genfromtxt('logs/acgan/.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    #log_3_3 = np.genfromtxt('logs/acgan/.csv', delimiter=',', dtype=np.float32)[1:, 1:]
+    #log_3_4 = np.genfromtxt('logs/acgan/.csv', delimiter=',', dtype=np.float32)[1:, 1:]
 
     ##########
 
     plt.figure(figsize=(9, 3))
     plt.subplot(121)
-    plt.plot(log_1_1[:, 0], log_1_1[:, 1])
+    plt.plot(log_1_1[:, 0], log_1_1[:, 1], 'b')
     plt.title('KLD loss')
     plt.xlabel('iteration')
     plt.ylabel('loss')
 
     plt.subplot(122)
-    plt.plot(log_1_2[:, 0], log_1_2[:, 1])
+    plt.plot(log_1_2[:, 0], log_1_2[:, 1], 'r')
     plt.title('MSE loss')
     plt.xlabel('iteration')
     plt.ylabel('loss')
@@ -53,6 +53,7 @@ if __name__ == '__main__':
     plt.title('Discriminator/Generator loss')
     plt.xlabel('iteration')
     plt.ylabel('loss')
+    plt.ylim(ymin=0)
     plt.legend(loc=0)
 
     plt.subplot(122)
@@ -61,6 +62,7 @@ if __name__ == '__main__':
     plt.title('Discriminator real/fake image loss')
     plt.xlabel('iteration')
     plt.ylabel('loss')
+    plt.ylim(ymin=0)
     plt.legend(loc=0)
 
     plt.tight_layout()
@@ -74,6 +76,7 @@ if __name__ == '__main__':
     plt.title('Discriminator/Generator loss')
     plt.xlabel('iteration')
     plt.ylabel('loss')
+    plt.ylim(ymin=0)
     plt.legend(loc=0)
 
     plt.subplot(122)
@@ -82,8 +85,10 @@ if __name__ == '__main__':
     plt.title('Discriminator real/fake image loss')
     plt.xlabel('iteration')
     plt.ylabel('loss')
+    plt.ylim(ymin=0)
     plt.legend(loc=0)
 
     plt.tight_layout()
     plt.savefig(os.path.join(args.output_path, 'fig3_2.jpg'))
     '''
+

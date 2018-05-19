@@ -13,7 +13,7 @@ def SetArgument():
     parser.add_argument('-d', '--data_path', default='./hw4_data/', type=str)
     parser.add_argument('-o', '--output_path', default='./output/', type=str)
     parser.add_argument('-s', '--save_model_dir', default='./save_model/', type=str)
-    parser.add_argument('-l', '--load_model_file', default='./load_model/model_vae.ckpt', type=str)
+    parser.add_argument('-l', '--load_model_file', default='./model/model_vae.ckpt', type=str)
     parser.add_argument('--img_size', default=64, type=int)
     parser.add_argument('--img_channels', default=3, type=int)
     parser.add_argument('--epochs', default=100, type=int)
@@ -171,7 +171,7 @@ if __name__ == '__main__':
             whole_imgs = np.concatenate((origin_imgs, recon_imgs), axis=0)
             imsave(os.path.join(args.output_path, 'fig1_3.jpg'), whole_imgs)
 
-            N = 300
+            N = 200
             z_embed = TSNE(n_components=2, random_state=0).fit_transform(z_latent[:N])
 
             gender_0 = []

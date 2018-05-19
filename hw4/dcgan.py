@@ -128,18 +128,19 @@ if __name__ == '__main__':
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
-        D_r_loss_sum = tf.summary.scalar('D r loss', D_r_loss)
-        D_f_loss_sum = tf.summary.scalar('D f loss', D_f_loss)
-        D_loss_sum = tf.summary.scalar('D loss', D_loss)
-        G_loss_sum = tf.summary.scalar('G loss', G_loss)
-        train_sum = tf.summary.merge_all()
-        train_writer = tf.summary.FileWriter('./logs_dcgan', graph=sess.graph)
-
         sess.run(tf.global_variables_initializer())
 
         # ==================== Train ==================== #
 
         if args.action == 'train':
+
+            D_r_loss_sum = tf.summary.scalar('D r loss', D_r_loss)
+            D_f_loss_sum = tf.summary.scalar('D f loss', D_f_loss)
+            D_loss_sum = tf.summary.scalar('D loss', D_loss)
+            G_loss_sum = tf.summary.scalar('G loss', G_loss)
+            train_sum = tf.summary.merge_all()
+            train_writer = tf.summary.FileWriter('./logs_dcgan', graph=sess.graph)
+            
             max_iter = epochs * (len(x_train)//batch_size)
             print('max iteration: {}'.format(max_iter))
 
@@ -202,4 +203,5 @@ if __name__ == '__main__':
                     row = np.hstack(img for img in image_generate[8*i:8*(i+1)])
                     whole_imgs = np.concatenate((whole_imgs, row), axis=0)
             imsave(os.path.join(args.output_path, 'fig2_3.jpg'), whole_imgs)
+
 
