@@ -161,7 +161,7 @@ if __name__ == '__main__':
 
                 _, d_loss, summary = sess.run([D_train, D_loss, train_sum], feed_dict=feed_dict)
                 train_writer.add_summary(summary, i)
-                _, g_loss, l_summary = sess.run([G_train, G_loss, train_sum], feed_dict=feed_dict)
+                _, g_loss, summary = sess.run([G_train, G_loss, train_sum], feed_dict=feed_dict)
                 train_writer.add_summary(summary, i)
 
                 if i % 200 == 0:
