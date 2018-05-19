@@ -90,9 +90,9 @@ if __name__ == '__main__':
     # ==================== Load Data ==================== #
 
     if action == 'train':
-        #x_train, _ = LoadData(train_img_dir, train_label)
+        x_train, _ = LoadData(train_img_dir, train_label)
         #np.save('x_train.npy', x_train)
-        x_train = np.load('x_train.npy')
+        #x_train = np.load('x_train.npy')
     else:
         x_test, y_test = LoadData(test_img_dir, test_label)
 
