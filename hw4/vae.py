@@ -16,8 +16,8 @@ def SetArgument():
     parser.add_argument('-l', '--load_model_file', default='./load_model/model_vae.ckpt', type=str)
     parser.add_argument('--img_size', default=64, type=int)
     parser.add_argument('--img_channels', default=3, type=int)
-    parser.add_argument('--epochs', default=400, type=int)
-    parser.add_argument('--batch_size', default=200, type=int)
+    parser.add_argument('--epochs', default=100, type=int)
+    parser.add_argument('--batch_size', default=100, type=int)
     parser.add_argument('--latent_dim', default=1024, type=int)
     return parser.parse_args()
 
@@ -26,7 +26,7 @@ def LoadData(img_path, label_path):
     images = []
     for img in img_files:
         images.append(imread(os.path.join(img_path, img)))
-    images = (np.array(images).astype('float32') - 128) / 128
+    images = (np.array(images).astype('float32') - 127.5) / 127.5
     labels = np.genfromtxt(label_path, delimiter=',', dtype=np.int8)[1:, 1:]
     return images, labels
 
@@ -34,14 +34,14 @@ def LoadData(img_path, label_path):
 
 def encoder_model(x_input, img_size, img_channels, latent_dim, isTrain):
     with tf.variable_scope('encoder', reuse=tf.AUTO_REUSE):
-        x = tf.layers.conv2d(x_input, filters=64, kernel_size=4, strides=2, padding='valid', activation=tf.nn.leaky_relu)
-        x = tf.layers.batch_normalization(x, training=isTrain)
-        x = tf.layers.conv2d(x, filters=128, kernel_size=4, strides=2, padding='valid', activation=tf.nn.leaky_relu)
-        x = tf.layers.batch_normalization(x, training=isTrain)
-        x = tf.layers.conv2d(x, filters=256, kernel_size=4, strides=2, padding='valid', activation=tf.nn.leaky_relu)
-        x = tf.layers.batch_normalization(x, training=isTrain)
-        x = tf.layers.conv2d(x, filters=512, kernel_size=4, strides=2, padding='valid', activation=tf.nn.leaky_relu)
-        x = tf.layers.batch_normalization(x, training=isTrain)
+        x = tf.layers.conv2d(x_input, filters=64, kernel_size=4, strides=2, padding='same')
+        x = tf.nn.leaky_relu(tf.layers.batch_normalization(x, training=isTrain))
+        x = tf.layers.conv2d(x, filters=128, kernel_size=4, strides=2, padding='same')
+        x = tf.nn.leaky_relu(tf.layers.batch_normalization(x, training=isTrain))
+        x = tf.layers.conv2d(x, filters=256, kernel_size=4, strides=2, padding='same')
+        x = tf.nn.leaky_relu(tf.layers.batch_normalization(x, training=isTrain))
+        x = tf.layers.conv2d(x, filters=512, kernel_size=4, strides=2, padding='same')
+        x = tf.nn.leaky_relu(tf.layers.batch_normalization(x, training=isTrain))
         flat = tf.layers.flatten(x)
         mean = tf.layers.dense(flat, units=latent_dim)
         log_var = tf.layers.dense(flat, units=latent_dim)
@@ -55,17 +55,16 @@ def encoder_model(x_input, img_size, img_channels, latent_dim, isTrain):
 def decoder_model(z_input, img_size, img_channels, latent_dim, isTrain):
     with tf.variable_scope('decoder', reuse=tf.AUTO_REUSE):
         x = tf.layers.dense(z_input, units=latent_dim)
-        x = tf.reshape(x, [-1, 2, 2, latent_dim//4])
-        x = tf.layers.conv2d_transpose(x, filters=256, kernel_size=4, strides=2, padding='valid', activation=tf.nn.leaky_relu)
+        x = tf.reshape(x, [-1, 4, 4, latent_dim//16])
+        x = tf.layers.conv2d_transpose(x, filters=256, kernel_size=4, strides=2, padding='same')
+        x = tf.nn.relu(tf.layers.batch_normalization(x, training=isTrain))
+        x = tf.layers.conv2d_transpose(x, filters=128, kernel_size=4, strides=2, padding='same')
+        x = tf.nn.relu(tf.layers.batch_normalization(x, training=isTrain))
+        x = tf.layers.conv2d_transpose(x, filters=64, kernel_size=4, strides=2, padding='same')
+        x = tf.nn.relu(tf.layers.batch_normalization(x, training=isTrain))
+        x = tf.layers.conv2d_transpose(x, filters=3, kernel_size=4, strides=2, padding='same')
         x = tf.layers.batch_normalization(x, training=isTrain)
-        x = tf.layers.conv2d_transpose(x, filters=128, kernel_size=4, strides=2, padding='valid', activation=tf.nn.leaky_relu)
-        x = tf.layers.batch_normalization(x, training=isTrain)
-        x = tf.layers.conv2d_transpose(x, filters=64, kernel_size=4, strides=2, padding='valid', activation=tf.nn.leaky_relu)
-        x = tf.layers.batch_normalization(x, training=isTrain)
-        x = tf.layers.conv2d_transpose(x, filters=16, kernel_size=4, strides=2, padding='valid', activation=tf.nn.leaky_relu)
-        x = tf.layers.batch_normalization(x, training=isTrain)
-        x = tf.layers.conv2d_transpose(x, filters=3, kernel_size=3, strides=1, padding='valid', activation=tf.nn.tanh)
-        print(tf.shape(x))
+        x = tf.nn.tanh(x)
     return x
 
 
@@ -91,9 +90,9 @@ if __name__ == '__main__':
     # ==================== Load Data ==================== #
 
     if action == 'train':
-        x_train, _ = LoadData(train_img_dir, train_label)
+        #x_train, _ = LoadData(train_img_dir, train_label)
         #np.save('x_train.npy', x_train)
-        #x_train = np.load('x_train.npy')
+        x_train = np.load('x_train.npy')
     else:
         x_test, y_test = LoadData(test_img_dir, test_label)
 
@@ -164,11 +163,11 @@ if __name__ == '__main__':
             print('\n=== finish loading model ===\n')
             z_latent, img_recon, recon = sess.run([z_sample, x_dec, recon_loss], feed_dict={x_input: x_test, x_output: x_test})
             print('\nThe MSE of the entire testing set is {}'.format(recon.mean()))
-            img_recon = np.array(img_recon)[10:20]
+            img_recon = np.array(img_recon)[0:10]
             z_latent = np.array(z_latent)
 
-            origin_imgs = np.hstack(img for img in x_test[10:20]) * 128 + 128
-            recon_imgs = np.hstack(img for img in img_recon) * 128 + 128
+            origin_imgs = np.hstack(img for img in x_test[0:10]) * 127.5 + 127.5
+            recon_imgs = np.hstack(img for img in img_recon) * 127.5 + 127.5
             whole_imgs = np.concatenate((origin_imgs, recon_imgs), axis=0)
             imsave(os.path.join(args.output_path, 'fig1_3.jpg'), whole_imgs)
 
@@ -193,7 +192,7 @@ if __name__ == '__main__':
         # ==================== Generate ==================== #
 
         elif action == 'generate':
-            np.random.seed(3)
+            np.random.seed(0)
             z_random = np.random.normal(size=(32, latent_dim))
             x_dec = decoder_model(z_input, img_size, img_channels, latent_dim, isTrain=False)
 
@@ -203,7 +202,7 @@ if __name__ == '__main__':
             saver.restore(sess, args.load_model_file)
             print('\n=== finish loading model ===\n')
             img_decoded = sess.run([x_dec], feed_dict={z_input: z_random})
-            img_decoded = np.squeeze(np.array(img_decoded), axis=0) * 128 + 128
+            img_decoded = np.squeeze(np.array(img_decoded), axis=0) * 127.5 + 127.5
 
             for i in range(4):
                 if i == 0:
