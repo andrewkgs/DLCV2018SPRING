@@ -30,13 +30,13 @@ if __name__ == '__main__':
 
     plt.figure(figsize=(9, 3))
     plt.subplot(121)
-    plt.plot(log_1_1[:, 0], log_1_1[:, 1], 'b')
+    plt.plot(log_1_1[:, 0], log_1_1[:, 1])
     plt.title('KLD loss')
     plt.xlabel('iteration')
     plt.ylabel('loss')
 
     plt.subplot(122)
-    plt.plot(log_1_2[:, 0], log_1_2[:, 1], 'r')
+    plt.plot(log_1_2[:, 0], log_1_2[:, 1])
     plt.title('MSE loss')
     plt.xlabel('iteration')
     plt.ylabel('loss')
