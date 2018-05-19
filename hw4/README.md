@@ -43,7 +43,7 @@ python3 dcgan.py train -d <data path> -s <save model path>
 
 * Generate images
 ```
-python3 dcgan.py train -o <output path> -l <load model path>
+python3 dcgan.py generate -o <output path> -l <load model path>
 ```
 
 ### ACGAN
@@ -54,5 +54,5 @@ python3 acgan.py train -d <data path> -s <save model path>
 
 * Generate images
 ```
-python3 acgan.py -o <output path> -l <load model path>
+python3 acgan.py genertae -o <output path> -l <load model path>
 ```
