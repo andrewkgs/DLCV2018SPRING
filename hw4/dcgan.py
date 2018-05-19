@@ -84,9 +84,9 @@ if __name__ == '__main__':
     noise_dim = args.noise_dim
 
     if action == 'train':
-        #x_train, _ = LoadData(train_img_dir, train_label)
+        x_train, _ = LoadData(train_img_dir, train_label)
         #np.save('x_train.npy', x_train)
-        x_train = np.load('x_train.npy')
+        #x_train = np.load('x_train.npy')
     else:
         x_test, _ = LoadData(test_img_dir, test_label)
 
