@@ -163,10 +163,10 @@ if __name__ == '__main__':
             print('\n=== finish loading model ===\n')
             z_latent, img_recon, recon = sess.run([z_sample, x_dec, recon_loss], feed_dict={x_input: x_test, x_output: x_test})
             print('\nThe MSE of the entire testing set is {}'.format(recon.mean()))
-            img_recon = np.array(img_recon)[0:10]
+            img_recon = np.array(img_recon)[10:20]
             z_latent = np.array(z_latent)
 
-            origin_imgs = np.hstack(img for img in x_test[0:10]) * 127.5 + 127.5
+            origin_imgs = np.hstack(img for img in x_test[10:20]) * 127.5 + 127.5
             recon_imgs = np.hstack(img for img in img_recon) * 127.5 + 127.5
             whole_imgs = np.concatenate((origin_imgs, recon_imgs), axis=0)
             imsave(os.path.join(args.output_path, 'fig1_3.jpg'), whole_imgs)
