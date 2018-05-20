@@ -82,9 +82,6 @@ if __name__ == '__main__':
     epochs = args.epochs
     batch_size = args.batch_size
     noise_dim = args.noise_dim
-
-    if not os.path.exists(args.output_path):
-        os.makedirs(args.output_path)
     
     if action == 'train':
         x_train, _ = LoadData(train_img_dir, train_label)
@@ -191,6 +188,10 @@ if __name__ == '__main__':
         # ==================== Generate ==================== #
 
         elif args.action == 'generate':
+
+            if not os.path.exists(args.output_path):
+                os.makedirs(args.output_path)
+
             np.random.seed(1)
             z_random = np.random.normal(size=[32, noise_dim])
 
