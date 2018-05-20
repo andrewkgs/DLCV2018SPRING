@@ -83,6 +83,9 @@ if __name__ == '__main__':
     batch_size = args.batch_size
     noise_dim = args.noise_dim
 
+    if not os.path.exists(args.output_path):
+        os.makedirs(args.output_path)
+    
     if action == 'train':
         x_train, _ = LoadData(train_img_dir, train_label)
         #np.save('x_train.npy', x_train)
@@ -132,6 +135,9 @@ if __name__ == '__main__':
 
         if args.action == 'train':
 
+            if not os.path.exists('./imgs'):
+                os.makedirs('./imgs')
+            
             D_r_loss_sum = tf.summary.scalar('D r loss', D_r_loss)
             D_f_loss_sum = tf.summary.scalar('D f loss', D_f_loss)
             D_loss_sum = tf.summary.scalar('D loss', D_loss)
