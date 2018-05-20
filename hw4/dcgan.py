@@ -177,7 +177,7 @@ if __name__ == '__main__':
                         else:
                             row = np.hstack(img for img in image_generate[8*j:8*(j+1)])
                             whole_imgs = np.concatenate((whole_imgs, row), axis=0)
-                    imsave('./temp/{}.png'.format(i), whole_imgs)
+                    imsave('./imgs/{}.png'.format(i), whole_imgs)
 
                 if i % 2000 == 0:
                     saver.save(sess, os.path.join(args.save_model_dir, 'model_dcgan_{}.ckpt'.format(i)))
