@@ -122,7 +122,7 @@ if __name__ == '__main__':
         with tf.control_dependencies(D_update_ops):
             D_train = D_optimizer.minimize(D_loss, var_list=D_vars)
 
-    saver = tf.train.Saver()
+    saver = tf.train.Saver(max_to_keep=10)
 
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
