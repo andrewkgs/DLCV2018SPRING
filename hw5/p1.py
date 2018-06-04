@@ -125,7 +125,7 @@ def main():
 
         history = LossHistory(x_train, x_valid)
 
-        ckpt = ModelCheckpoint(filepath=os.path.join(args.save_model_dir, 'model_p1_{val_acc:.4f}.h5'),
+        ckpt = ModelCheckpoint(filepath=os.path.join(args.save_model_dir, 'model_p1_e{epoch:02d}_{val_acc:.4f}.h5'),
                                save_best_only=True,
                                save_weights_only=True,
                                verbose=1,

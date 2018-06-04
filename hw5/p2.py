@@ -32,17 +32,17 @@ parser.add_argument('--save_valid_feature_dir', default='./feat_valid', type=str
 parser.add_argument('--n_class', default=11, type=int)
 parser.add_argument('--epochs', default=100, type=int)
 parser.add_argument('--batch_size', default=64, type=int)
-parser.add_argument('--seq_max_len', default=100, type=int)
-parser.add_argument('--dropout_rate', default=0.5, type=int)
+parser.add_argument('--seq_max_len', default=50, type=int)
+parser.add_argument('--dropout_rate', default=0.4, type=int)
 
 args = parser.parse_args()
 
 
 def build_classifier():
-    re1 = LSTM(256, return_sequences=True, dropout=0.25, recurrent_dropout=0.25, activation='tanh')
-    re2 = LSTM(256, return_sequences=True, dropout=0.25, recurrent_dropout=0.25, activation='tanh')
-    re3 = LSTM(256, return_sequences=False, dropout=0.25, recurrent_dropout=0.25, activation='tanh')
-    fc1 = Dense(256, activation='relu')
+    re1 = LSTM(256, return_sequences=True, dropout=0.2, recurrent_dropout=0.2, activation='tanh')
+    re2 = LSTM(256, return_sequences=True, dropout=0.2, recurrent_dropout=0.2, activation='tanh')
+    re3 = LSTM(256, return_sequences=False, dropout=0.2, recurrent_dropout=0.2, activation='tanh')
+    fc1 = Dense(512, activation='relu')
     fc2 = Dense(128, activation='relu')
     classifier = Dense(11, activation='softmax')
 
@@ -134,7 +134,7 @@ def main():
 
         history = LossHistory(x_train, x_valid)
 
-        ckpt = ModelCheckpoint(filepath=os.path.join(args.save_model_dir, 'model_p2_{val_acc:.4f}.h5'),
+        ckpt = ModelCheckpoint(filepath=os.path.join(args.save_model_dir, 'model_p2_e{epoch:02d}_{val_acc:.4f}.h5'),
                                save_best_only=True,
                                save_weights_only=True,
                                verbose=1,
@@ -163,10 +163,10 @@ def main():
             feat = base_model.predict(frame)
             #feat = np.load(os.path.join(args.save_valid_feature_dir, name) + '.npy')
 
-            feat = np.mean(feat, axis=0)
             x_test.append(feat)
 
         x_test = np.array(x_test)
+        x_test = pad_sequences(x_test, maxlen=args.seq_max_len)
 
         classifier = build_classifier()
         classifier.load_weights(args.load_model_file)
