@@ -13,7 +13,7 @@ Train an RNN model to perform trimmed action recognition and temporal action seg
 [![Keras version](https://img.shields.io/badge/Keras-2.1.5-green.svg)](https://pypi.python.org/pypi/Keras/2.1.5)
 
 ## Execution Commands
-* Reproduce the results in the report
+* Reproduce the results in the report.
 ```sh
 bash hw5_p1.sh <directory of trimmed validation videos folder> <path of ground-truth csv file> <directory of output labels folder>
 bash hw5_p2.sh <directory of trimmed validation/test videos folder> <path of ground-truth csv file> <directory of output labels folder>
@@ -21,6 +21,9 @@ bash hw5_p3.sh <directory of full-length validation videos folder> <directory of
 ```
 * Train
 ```
+python3 hw5_p1.py train
+python3 hw5_p2.py train
+python3 hw5_p3.py train
 ```
 
 * Test
