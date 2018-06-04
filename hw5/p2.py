@@ -32,7 +32,7 @@ parser.add_argument('--save_train_feature_dir', default='./feat_train', type=str
 parser.add_argument('--save_valid_feature_dir', default='./feat_valid', type=str)
 
 parser.add_argument('--n_class', default=11, type=int)
-parser.add_argument('--epochs', default=200, type=int)
+parser.add_argument('--epochs', default=100, type=int)
 parser.add_argument('--batch_size', default=64, type=int)
 parser.add_argument('--seq_max_len', default=100, type=int)
 parser.add_argument('--dropout_rate', default=0.5, type=int)
