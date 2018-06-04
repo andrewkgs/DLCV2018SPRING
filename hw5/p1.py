@@ -1,5 +1,3 @@
-#from keras.applications.vgg16 import VGG16, preprocess_input
-#from keras.applications.inception_v3 import InceptionV3, preprocess_inputs
 from keras.applications.resnet50 import ResNet50, preprocess_input
 from keras.layers import Input, Dense, Dropout
 from keras.models import Model
