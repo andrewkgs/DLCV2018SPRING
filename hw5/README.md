@@ -17,7 +17,7 @@ Train an RNN model to perform trimmed action recognition and temporal action seg
 ```sh
 bash hw5_p1.sh <directory of trimmed validation videos folder> <path of ground-truth csv file> <directory of output labels folder>
 bash hw5_p2.sh <directory of trimmed validation/test videos folder> <path of ground-truth csv file> <directory of output labels folder>
-bash hw5_p.sh <directory of full-length validation videos folder> <directory of output labels folder>
+bash hw5_p3.sh <directory of full-length validation videos folder> <directory of output labels folder>
 ```
 * Train
 ```
