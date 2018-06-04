@@ -1,7 +1,9 @@
 #from keras.applications.vgg16 import VGG16, preprocess_input
-#from keras.applications.inception_v3 import InceptionV3, preprocess_inputs
+#from keras.applications.inception_v3 import InceptionV3, preprocess_input
 from keras.applications.resnet50 import ResNet50, preprocess_input
 from keras.layers import Input, Dense, Dropout
+from keras.layers.recurrent import LSTM
+from keras.preprocessing.sequence import pad_sequences
 from keras.models import Model
 from keras.callbacks import Callback, ModelCheckpoint
 import os
@@ -21,36 +23,43 @@ parser.add_argument('-te', '--test_video', default='./HW5_data/TrimmedVideos/vid
 parser.add_argument('-trl', '--train_label', default='./HW5_data/TrimmedVideos/label/gt_train.csv', type=str)
 parser.add_argument('-vl', '--valid_label', default='./HW5_data/TrimmedVideos/label/gt_valid.csv', type=str)
 parser.add_argument('-tel', '--test_label', default='./HW5_data/TrimmedVideos/label/gt_valid.csv', type=str)
-parser.add_argument('-o', '--output_file', default='./p1.txt', type=str)
+parser.add_argument('-o', '--output_file', default='./p2.txt', type=str)
 
 parser.add_argument('--save_model_dir', default='./save_model/', type=str)
-parser.add_argument('-l', '--load_model_file', default='./model/model_p1.h5', type=str)
+parser.add_argument('-l', '--load_model_file', default='./model/model_p2.h5', type=str)
 
 parser.add_argument('--save_train_feature_dir', default='./feat_train', type=str)
 parser.add_argument('--save_valid_feature_dir', default='./feat_valid', type=str)
 
 parser.add_argument('--n_class', default=11, type=int)
-parser.add_argument('--epochs', default=100, type=int)
+parser.add_argument('--epochs', default=200, type=int)
 parser.add_argument('--batch_size', default=64, type=int)
+parser.add_argument('--seq_max_len', default=100, type=int)
 parser.add_argument('--dropout_rate', default=0.5, type=int)
 
 args = parser.parse_args()
 
 
 def build_classifier():
-    fc1 = Dense(512, activation='relu')
+    re1 = LSTM(256, return_sequences=True, dropout=0.25, recurrent_dropout=0.25, activation='tanh')
+    re2 = LSTM(256, return_sequences=True, dropout=0.25, recurrent_dropout=0.25, activation='tanh')
+    re3 = LSTM(256, return_sequences=False, dropout=0.25, recurrent_dropout=0.25, activation='tanh')
+    fc1 = Dense(256, activation='relu')
     fc2 = Dense(128, activation='relu')
-    classifier = Dense(args.n_class, activation='softmax')
+    classifier = Dense(11, activation='softmax')
 
-    feature = Input(shape=(2048,))
-    x = fc1(feature)
+    feature = Input(shape=(args.seq_max_len, 2048))
+    x = re1(feature)
+    x = re2(x)
+    x = re3(x)
+    x = fc1(x)
     x = Dropout(args.dropout_rate)(x)
     x = fc2(x)
     x = Dropout(args.dropout_rate)(x)
     category = classifier(x)
 
     model = Model(inputs=feature, outputs=category)
-    #model.summary()
+    model.summary()
 
     return model
 
@@ -74,27 +83,27 @@ def main():
             #np.save(os.path.join(args.save_train_feature_dir, name) + '.npy', feat)
             feat = np.load(os.path.join(args.save_train_feature_dir, name) + '.npy')
 
-            feat = np.mean(feat, axis=0)
             x_train.append(feat)
             y_train.append(np.eye(args.n_class, dtype=int)[int(label)])
 
         x_train = np.array(x_train)
+        x_train = pad_sequences(x_train, maxlen=args.seq_max_len)
         y_train = np.array(y_train)
 
 
         x_valid, y_valid = [], []
         for cate, name, label in zip(list_valid['Video_category'], list_valid['Video_name'], list_valid['Action_labels']):
-            #frame = readShortVideo(args.valid_video, cate, name)
+            #frame = readShortVideo(args.train_video, cate, name)
             #frame = preprocess_input(frame)
             #feat = base_model.predict(frame)
             #np.save(os.path.join(args.save_valid_feature_dir, name) + '.npy', feat)
             feat = np.load(os.path.join(args.save_valid_feature_dir, name) + '.npy')
 
-            feat = np.mean(feat, axis=0)
             x_valid.append(feat)
             y_valid.append(np.eye(args.n_class, dtype=int)[int(label)])
 
         x_valid = np.array(x_valid)
+        x_valid = pad_sequences(x_valid, maxlen=args.seq_max_len)
         y_valid = np.array(y_valid)
 
         classifier = build_classifier()
@@ -127,7 +136,7 @@ def main():
 
         history = LossHistory(x_train, x_valid)
 
-        ckpt = ModelCheckpoint(filepath=os.path.join(args.save_model_dir, 'model_p1_{val_acc:.4f}.h5'),
+        ckpt = ModelCheckpoint(filepath=os.path.join(args.save_model_dir, 'model_p2_{val_acc:.4f}.h5'),
                                save_best_only=True,
                                save_weights_only=True,
                                verbose=1,
@@ -142,9 +151,9 @@ def main():
                        validation_data=(x_valid, y_valid),
                        callbacks=[ckpt, history])
 
-        if not os.path.exists('./p1_callback'):
-            os.makedirs('./p1_callback')
-        history.save('./p1_callback')
+        if not os.path.exists('./p2_callback'):
+            os.makedirs('./p2_callback')
+        history.save('./p2_callback')
 
     elif args.action == 'test':
         list_test = getVideoList(args.test_label)
