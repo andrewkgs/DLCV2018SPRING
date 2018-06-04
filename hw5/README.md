@@ -21,11 +21,14 @@ bash hw5_p3.sh <directory of full-length validation videos folder> <directory of
 ```
 * Train
 ```
-python3 hw5_p1.py train
-python3 hw5_p2.py train
-python3 hw5_p3.py train
+python3 p1.py train
+python3 p2.py train
+python3 p3.py train
 ```
 
 * Test
 ```
+python p1.py test
+python p2.py test
+python p3.py test
 ```
