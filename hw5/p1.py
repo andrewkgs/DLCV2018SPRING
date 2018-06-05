@@ -66,11 +66,11 @@ def main():
 
         x_train, y_train = [], []
         for cate, name, label in zip(list_train['Video_category'], list_train['Video_name'], list_train['Action_labels']):
-            #frame = readShortVideo(args.train_video, cate, name)
-            #frame = preprocess_input(frame)
-            #feat = base_model.predict(frame)
-            #np.save(os.path.join(args.save_train_feature_dir, name) + '.npy', feat)
-            feat = np.load(os.path.join(args.save_train_feature_dir, name) + '.npy')
+            frame = readShortVideo(args.train_video, cate, name)
+            frame = preprocess_input(frame)
+            feat = base_model.predict(frame)
+            np.save(os.path.join(args.save_train_feature_dir, name) + '.npy', feat)
+            #feat = np.load(os.path.join(args.save_train_feature_dir, name) + '.npy')
 
             feat = np.mean(feat, axis=0)
             x_train.append(feat)
@@ -82,11 +82,11 @@ def main():
 
         x_valid, y_valid = [], []
         for cate, name, label in zip(list_valid['Video_category'], list_valid['Video_name'], list_valid['Action_labels']):
-            #frame = readShortVideo(args.valid_video, cate, name)
-            #frame = preprocess_input(frame)
-            #feat = base_model.predict(frame)
-            #np.save(os.path.join(args.save_valid_feature_dir, name) + '.npy', feat)
-            feat = np.load(os.path.join(args.save_valid_feature_dir, name) + '.npy')
+            frame = readShortVideo(args.valid_video, cate, name)
+            frame = preprocess_input(frame)
+            feat = base_model.predict(frame)
+            np.save(os.path.join(args.save_valid_feature_dir, name) + '.npy', feat)
+            #feat = np.load(os.path.join(args.save_valid_feature_dir, name) + '.npy')
 
             feat = np.mean(feat, axis=0)
             x_valid.append(feat)
