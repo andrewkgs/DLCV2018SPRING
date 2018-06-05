@@ -42,7 +42,7 @@ args = parser.parse_args()
 def build_classifier():
     re1 = LSTM(256, return_sequences=True, dropout=0.2, recurrent_dropout=0.2, activation='tanh')
     re2 = LSTM(256, return_sequences=True, dropout=0.2, recurrent_dropout=0.2, activation='tanh')
-    re3 = LSTM(256, return_sequences=False, dropout=0.2, recurrent_dropout=0.2, activation='tanh')
+    re3 = LSTM(256, return_sequences=False, dropout=0.2, recurrent_dropout=0.2, activation='tanh', name='rnn_output')
     fc1 = Dense(512, activation='relu')
     fc2 = Dense(128, activation='relu')
     classifier = Dense(11, activation='softmax')
@@ -58,9 +58,10 @@ def build_classifier():
     category = classifier(x)
 
     model = Model(inputs=feature, outputs=category)
+    rnn_model = Model(inputs=model.input, outputs=model.get_layer('rnn_output').output)
     #model.summary()
 
-    return model
+    return model, rnn_model
 
 
 def main():
@@ -105,7 +106,7 @@ def main():
         x_valid = pad_sequences(x_valid, maxlen=args.seq_max_len)
         y_valid = np.array(y_valid)
 
-        classifier = build_classifier()
+        classifier, _ = build_classifier()
         classifier.compile(loss='categorical_crossentropy', optimizer='Adam', metrics=['accuracy'])
 
         class LossHistory(Callback):
@@ -169,10 +170,12 @@ def main():
         x_test = np.array(x_test)
         x_test = pad_sequences(x_test, maxlen=args.seq_max_len)
 
-        classifier = build_classifier()
+        classifier, rnn = build_classifier()
         classifier.load_weights(args.load_model_file)
 
         pred_prob = classifier.predict(x_test)
+        #rnn_feature = rnn.predict(x_test)
+        #np.save('./rnn_feature.npy', rnn_feature)
         pred = np.argmax(pred_prob, axis=-1)
 
         if not os.path.exists(args.output_dir):
