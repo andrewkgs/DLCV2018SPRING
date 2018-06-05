@@ -20,6 +20,7 @@ parser.add_argument('-trl', '--train_label', default='./HW5_data/TrimmedVideos/l
 parser.add_argument('-vl', '--valid_label', default='./HW5_data/TrimmedVideos/label/gt_valid.csv', type=str)
 parser.add_argument('-tel', '--test_label', default='./HW5_data/TrimmedVideos/label/gt_valid.csv', type=str)
 parser.add_argument('-o', '--output_dir', default='./output/', type=str)
+parser.add_argument('-on', '--output_name', default='p1_valid.txt', type=str)
 
 parser.add_argument('--save_model_dir', default='./save_model/', type=str)
 parser.add_argument('-l', '--load_model_file', default='./model/model_p1.h5', type=str)
@@ -168,7 +169,7 @@ def main():
         if not os.path.exists(args.output_dir):
             os.makedirs(args.output_dir)
 
-        with open(os.path.join(args.output_dir, 'p1_valid.txt'), 'w') as fo:
+        with open(os.path.join(args.output_dir, args.output_name), 'w') as fo:
             for idx in range(pred.shape[0]):
                 fo.write('{}\n'.format(pred[idx]))
 
