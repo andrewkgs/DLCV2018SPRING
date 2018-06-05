@@ -159,16 +159,21 @@ def main():
         list_test = getVideoList(args.test_label)
 
         x_test = []
+        #x_test_mean = []
         for cate, name, label in zip(list_test['Video_category'], list_test['Video_name'], list_test['Action_labels']):
             frame = readShortVideo(args.test_video, cate, name)
             frame = preprocess_input(frame)
             feat = base_model.predict(frame)
             #feat = np.load(os.path.join(args.save_valid_feature_dir, name) + '.npy')
-
             x_test.append(feat)
+
+            #feat_mean = np.mean(feat, axis=0)
+            #x_test_mean.append(feat_mean)
 
         x_test = np.array(x_test)
         x_test = pad_sequences(x_test, maxlen=args.seq_max_len)
+        #cnn_feature = np.array(x_test_mean)
+        #np.save('./cnn_feature.npy', cnn_feature)
 
         classifier, rnn = build_classifier()
         classifier.load_weights(args.load_model_file)
