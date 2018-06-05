@@ -28,7 +28,7 @@ python3 p3.py train
 
 * Test
 ```
-python p1.py test -te=<test video directory> -tel=<test ground truth file> -o=<output_dir>
-python p2.py test -te=<test video directory> -tel=<test ground truth file> -o=<output_dir>
+python p1.py test -te=<test video directory> -tel=<test ground truth file> -o=<output directory>
+python p2.py test -te=<test video directory> -tel=<test ground truth file> -o=<output directory>
 python p3.py test
 ```
