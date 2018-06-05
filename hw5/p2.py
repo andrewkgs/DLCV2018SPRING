@@ -57,7 +57,7 @@ def build_classifier():
     category = classifier(x)
 
     model = Model(inputs=feature, outputs=category)
-    model.summary()
+    #model.summary()
 
     return model
 
@@ -174,7 +174,7 @@ def main():
         pred_prob = classifier.predict(x_test)
         pred = np.argmax(pred_prob, axis=-1)
 
-        if not os.path.exists(args.output_dir)
+        if not os.path.exists(args.output_dir):
             os.makedirs(args.output_dir)
 
         with open(os.path.join(args.output_dir, './p2_result.txt'), 'w') as fo:
