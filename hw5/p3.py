@@ -2,7 +2,6 @@ from keras.applications.resnet50 import ResNet50, preprocess_input
 from keras.models import Model, Sequential
 from keras.layers import Input, Dense, Dropout, LSTM
 from keras.layers.wrappers import TimeDistributed
-
 import os
 import argparse
 import numpy as np
