@@ -65,14 +65,11 @@ def main():
             #one_video = base_model.predict(one_video)
             #np.save(os.path.join(args.save_train_feature_dir, v) + '.npy', one_video)
             one_video = np.load(os.path.join(args.save_train_feature_dir, v+'.npy'))
-            print(one_video.shape)
             x_train.append(one_video)
             y_train.append(np.genfromtxt(os.path.join(args.train_label, v+'.txt')))
 
         x_train = np.array(x_train)
         y_train = np.array(y_train)
-
-        print()
 
         x_valid, y_valid = [], []
         for v in sorted(os.listdir(args.valid_video)):
@@ -85,7 +82,6 @@ def main():
             #one_video = base_model.predict(one_video)
             #np.save(os.path.join(args.save_valid_feature_dir, v) + '.npy', one_video)
             one_video = np.load(os.path.join(args.save_valid_feature_dir, v+'.npy'))
-            print(one_video.shape)
             x_valid.append(one_video)
             y_valid.append(np.genfromtxt(os.path.join(args.valid_label, v+'.txt')))
 
