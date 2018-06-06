@@ -23,12 +23,12 @@ bash hw5_p3.sh <directory of full-length validation videos folder> <directory of
 ```
 python3 p1.py train -tr=<train video directory> -v=<validation video directory> -trl=<train ground truth file> -vl=<validation ground truth file>
 python3 p2.py train -tr=<train video directory> -v=<validation video directory> -trl=<train ground truth file> -vl=<validation ground truth file>
-python3 p3.py train
+python3 p3.py train -tr=<train video directory> -v=<validation video directory> -trl=<train ground truth directory> -vl=<validation ground truth directory>
 ```
 
 * Test
 ```
 python p1.py test -te=<test video directory> -tel=<test ground truth file> -o=<output directory> -on=<output file name>
 python p2.py test -te=<test video directory> -tel=<test ground truth file> -o=<output directory> -on=<output file name>
-python p3.py test
+python p3.py test -te=<test video directory> -tel=<test ground truth directory> -o=<output directory> -on=<output file name>
 ```
