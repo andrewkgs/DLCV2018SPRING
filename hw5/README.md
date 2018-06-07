@@ -30,5 +30,5 @@ python3 p3.py train -tr=<train video directory> -v=<validation video directory> 
 ```
 python p1.py test -te=<test video directory> -tel=<test ground truth file> -o=<output directory> -on=<output file name>
 python p2.py test -te=<test video directory> -tel=<test ground truth file> -o=<output directory> -on=<output file name>
-python p3.py test -te=<test video directory> -tel=<test ground truth directory> -o=<output directory> -on=<output file name>
+python p3.py test -te=<test video directory> -tel=<test ground truth directory> -o=<output directory>
 ```
