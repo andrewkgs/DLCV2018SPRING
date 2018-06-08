@@ -1,1 +1,1 @@
-python3 p2.py test -te=$1 -tel=$2 -o=$3
+python3 p2_trimmed_action_recognition.py test -te=$1 -tel=$2 -o=$3
