@@ -44,7 +44,7 @@ def build_classifier():
     model.add(TimeDistributed(Dense(128, activation='tanh')))
     model.add(Dropout(0.5))
     model.add(TimeDistributed(Dense(args.n_class, activation='softmax')))
-    model.summary()
+    #model.summary()
     return model
 
 
