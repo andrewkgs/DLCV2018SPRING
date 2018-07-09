@@ -5,7 +5,7 @@
 > Kaggle Competition: [Task 1](https://www.kaggle.com/t/979f5fee9706486a8f61738ce3c76a73) [Task 2](https://www.kaggle.com/t/eebb0cdcbce4453b841e5e2744a8d633)
 
 ## Task Description
-* Task 1: Training a classification model on a small amount of data.
+* Task 1: Train a classification model on a small amount of data.
 * Task 2: Perform few-shot learning to recognize a number of novel classes with insufficient number of training images.
 
 ## Toolkit Requirements
@@ -20,7 +20,7 @@ Please refer to the **README.md** file in the repositories **task1/** and **task
 ## Collaborators
 
 ### Team name
-r06942114_(:3」∠)_
+r06942114_(／‵Д′)／~╧╧
 
 ### Team members
 * R06942114  劉彥廷
