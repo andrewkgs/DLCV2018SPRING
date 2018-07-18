@@ -40,10 +40,10 @@ python3 semantic_segmentation.py train VGG16-FCN16s --train_data_dir=<training i
 ### Testing
 * For baseline model (VGG16-FCN32s):
 ```
-python3 semantic_segmentation.py test VGG16-FCN32s
+python3 semantic_segmentation.py test VGG16-FCN32s --test_data_dir=<testing images directory> --predict_dir=<predict images directory> --model_file=<model file path>
 ```
 
 * For improved model (VGG16-FCN16s):
 ```
-python3 semantic_segmentation.py test VGG16-FCN16s
+python3 semantic_segmentation.py test VGG16-FCN16s --test_data_dir=<testing images directory> --predict_dir=<predict images directory> --model_file=<model file path>
 ```
