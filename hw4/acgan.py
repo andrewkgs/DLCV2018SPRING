@@ -7,7 +7,7 @@ import tensorflow as tf
 
 
 def SetArgument():
-    parser = argparse.ArgumentParser(description='Generative Adversarial Network')
+    parser = argparse.ArgumentParser(description='ACGAN')
     parser.add_argument('action', choices=['train', 'generate'])
     parser.add_argument('-d', '--data_path', default='./hw4_data/', type=str)
     parser.add_argument('-o', '--output_path', default='./output/', type=str)
