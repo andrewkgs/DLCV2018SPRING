@@ -4,8 +4,8 @@
 
 
 ## Task Description
-[2-2] Perfrom color and texture segmentation on images.
-[2-3] Implement image-based bag-of-words (BoW) models.
+[ 2-2 ] Perfrom color and texture segmentation on images.<br/>
+[ 2-3 ] Implement image-based bag-of-words (BoW) models.
 
 
 ## Toolkit requirements
@@ -13,12 +13,12 @@
 
 
 ## Execution Commands
-* [2-2]
+* [ 2-2 ]
 ```
 python3 hw2_2.py -d <hw2 data directory> -o <output directory>
 ```
 
-* [2-3]
+* [ 2-3 ]
 ```
 python3 hw2_3.py -d <hw2 data directory> -o <output directory>
 ```
