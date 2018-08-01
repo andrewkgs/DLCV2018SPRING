@@ -21,9 +21,9 @@ def InterestPoints(dir, H_threshold):
     surf = xfeatures2d.SURF_create(H_threshold)
     first = True
     for category in ['Coast', 'Forest', 'Highway', 'Mountain', 'Suburb']:
-        img_name = os.listdir(dir + category)
+        img_name = os.listdir(os.path.join(dir, category))
         for file in img_name:
-            img_path = dir + category + '/' + file
+            img_path = os.path.join(os.path.join(dir, category), file)
             img = imread(img_path, 0)
             _, descriptors = surf.detectAndCompute(img, None)
             #print(len(descriptors))
@@ -150,7 +150,7 @@ def BoW(dir, VW, strategy, plot, H_threshold):
     print('BoW shape: {}'.format(BoW_whole.shape))
 
     if plot is True:
-        for idx in range(50):
+        for idx in [0, 10, 20, 30, 40]:
             plt.bar(np.arange(BoW_whole.shape[1]), BoW_whole[idx], width=1, edgecolor='b')
             #plt.ylim((0.0, 1.0))
             plt.title('BoW by {}'.format(strategy))
@@ -257,19 +257,19 @@ if __name__ == '__main__':
 
     clf_HS = KNeighborsClassifier(n_neighbors=5)
     clf_HS.fit(BoW_HS, label_train)
-    print(clf_HS.predict(BoW_HS_test))
+    #print(clf_HS.predict(BoW_HS_test))
     test_score = clf_HS.score(BoW_HS_test, label_test)
     print('Hard-Sum score: {}'.format(test_score))
 
     clf_SS = KNeighborsClassifier(n_neighbors=5)
     clf_SS.fit(BoW_SS, label_train)
-    print(clf_SS.predict(BoW_SS_test))
+    #print(clf_SS.predict(BoW_SS_test))
     test_score = clf_SS.score(BoW_SS_test, label_test)
     print('Soft-Sum score: {}'.format(test_score))
 
     clf_SM = KNeighborsClassifier(n_neighbors=5)
     clf_SM.fit(BoW_SM, label_train)
-    print(clf_SM.predict(BoW_SM_test))
+    #print(clf_SM.predict(BoW_SM_test))
     test_score = clf_SM.score(BoW_SM_test, label_test)
     print('Soft-Max score: {}'.format(test_score))
 
