@@ -11,3 +11,12 @@
 
 
 ## Execution Commands
+* 2-2
+```
+python3 hw2_2.py -d <hw2 data directory> -o <output directory>
+```
+
+* 2-3
+```
+python3 hw2_3.py -d <hw2 data directory> -o <output directory>
+```

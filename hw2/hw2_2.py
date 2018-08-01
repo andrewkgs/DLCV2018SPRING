@@ -3,7 +3,15 @@ from scipy.signal import convolve2d
 from skimage import io
 from skimage.color import label2rgb, rgb2lab, rgb2gray
 from sklearn.cluster import KMeans
+import os
+import argparse
 import numpy as np
+
+
+parser = argparse.ArgumentParser(description='DLCV hw2-2')
+parser.add_argument('-d', '--data_path', default='./HW2/', type=str)
+parser.add_argument('-o', '--output_path', default='./output_image/', type=str)
+args = parser.parse_args()
 
 
 def color_segmentation(img):
@@ -28,35 +36,40 @@ def texture_segmentation(img, filter, img_color=None):
     return label2rgb(seg)
 
 
-### Load image and filter ###
+if __name__ == '__main__':
 
-img_zebra = io.imread('./Problem2/zebra.jpg')
-img_mount = io.imread('./Problem2/mountain.jpg')
-mat = loadmat('./Problem2/filterBank.mat')
-filter = mat['F']
-output_path = './hw2-2/'
+    if not os.path.exists(args.output_path):
+        os.makedirs(args.output_path)
 
-### (a) Color Segmentation ###
+    ### Load image and filter ###
 
-seg_zebra = color_segmentation(img_zebra)
-seg_mount = color_segmentation(img_mount)
-io.imsave(output_path+'zebra_CS.jpg', seg_zebra)
-io.imsave(output_path+'mountain_CS.jpg', seg_mount)
-
-seg_lab_zebra = color_segmentation(rgb2lab(img_zebra))
-seg_lab_mount = color_segmentation(rgb2lab(img_mount))
-io.imsave(output_path+'zebra_CS_lab.jpg', seg_lab_zebra)
-io.imsave(output_path+'mountain_CS_lab.jpg', seg_lab_mount)
+    img_zebra = io.imread(os.path.join(args.data_path, './Problem2/zebra.jpg'))
+    img_mount = io.imread(os.path.join(args.data_path, './Problem2/mountain.jpg'))
+    mat = loadmat(os.path.join(args.data_path, './Problem2/filterBank.mat'))
+    filter = mat['F']
 
 
-### (b) Texture Segmentation ###
+    ### (a) Color Segmentation ###
 
-seg_zebra = texture_segmentation(rgb2gray(img_zebra), filter, None)
-seg_mount = texture_segmentation(rgb2gray(img_mount), filter, None)
-io.imsave(output_path+'zebra_TS_t.jpg', seg_zebra)
-io.imsave(output_path+'mountain_TS_t.jpg', seg_mount)
+    seg_zebra = color_segmentation(img_zebra)
+    seg_mount = color_segmentation(img_mount)
+    io.imsave(os.path.join(args.output_path, 'zebra_CS.jpg'), seg_zebra)
+    io.imsave(os.path.join(args.output_path, 'mountain_CS.jpg'), seg_mount)
 
-seg_lab_zebra = texture_segmentation(rgb2gray(img_zebra), filter, rgb2lab(img_zebra))
-seg_lab_mount = texture_segmentation(rgb2gray(img_mount), filter, rgb2lab(img_mount))
-io.imsave(output_path+'zebra_TS_tc.jpg', seg_lab_zebra)
-io.imsave(output_path+'mountain_TS_tc.jpg', seg_lab_mount)
+    seg_lab_zebra = color_segmentation(rgb2lab(img_zebra))
+    seg_lab_mount = color_segmentation(rgb2lab(img_mount))
+    io.imsave(os.path.join(args.output_path, 'zebra_CS_lab.jpg'), seg_lab_zebra)
+    io.imsave(os.path.join(args.output_path, 'mountain_CS_lab.jpg'), seg_lab_mount)
+
+
+    ### (b) Texture Segmentation ###
+
+    seg_zebra = texture_segmentation(rgb2gray(img_zebra), filter, None)
+    seg_mount = texture_segmentation(rgb2gray(img_mount), filter, None)
+    io.imsave(os.path.join(args.output_path, 'zebra_TS_t.jpg'), seg_zebra)
+    io.imsave(os.path.join(args.output_path, 'mountain_TS_t.jpg'), seg_mount)
+
+    seg_lab_zebra = texture_segmentation(rgb2gray(img_zebra), filter, rgb2lab(img_zebra))
+    seg_lab_mount = texture_segmentation(rgb2gray(img_mount), filter, rgb2lab(img_mount))
+    io.imsave(os.path.join(args.output_path, 'zebra_TS_tc.jpg'), seg_lab_zebra)
+    io.imsave(os.path.join(args.output_path, 'mountain_TS_tc.jpg'), seg_lab_mount)

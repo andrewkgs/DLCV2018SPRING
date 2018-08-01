@@ -4,10 +4,17 @@ from sklearn.decomposition import PCA
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.utils import shuffle
 import os
+import argparse
 import numpy as np
 from scipy.spatial.distance import euclidean
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+
+
+parser = argparse.ArgumentParser(description='DLCV hw2-3')
+parser.add_argument('-d', '--data_path', default='./HW2/', type=str)
+parser.add_argument('-o', '--output_path', default='./output_image/', type=str)
+args = parser.parse_args()
 
 
 def InterestPoints(dir, H_threshold):
@@ -149,7 +156,7 @@ def BoW(dir, VW, strategy, plot, H_threshold):
             plt.title('BoW by {}'.format(strategy))
             plt.xlabel('')
             plt.ylabel('')
-            plt.savefig(output_path+'BoW_by_{}_{}'.format(strategy, idx))
+            plt.savefig(os.path.join(args.output_path, 'BoW_by_{}_{}'.format(strategy, idx)))
             #plt.show()
             plt.clf()
 
@@ -158,26 +165,26 @@ def BoW(dir, VW, strategy, plot, H_threshold):
 
 if __name__ == '__main__':
 
+    if not os.path.exists(args.output_path):
+        os.makedirs(args.output_path)
 
     ### (a) ###
-    output_path = './hw2-3/'
-    img = imread('./Problem3/train-10/Coast/image_0006.jpg', 0) # 0 refers to gray scale
+    img = imread(args.data_path +'/Problem3/train-10/Coast/image_0006.jpg', 0) # 0 refers to gray scale
     surf = xfeatures2d.SURF_create(1250)
     keypoints, descriptors = surf.detectAndCompute(img, None)
     print('number of keypoints: {}'.format(len(keypoints)))
 
     img_det = drawKeypoints(img, keypoints, None, (0,0,255))
-    imwrite(output_path+'kp.jpg', img_det)
+    imwrite(os.path.join(args.output_path, 'kp.jpg'), img_det)
 
 
 
     ### (b),(c),(d)-(i) ###
-    output_path = './hw2-3/'
     H_threshold = 400
     n_clusters = 50
     max_iter = 5000
-    train_path = './Problem3/train-10/'
-    test_path = './Problem3/test-100/'
+    train_path = os.path.join(args.data_path, 'Problem3/train-10/')
+    test_path = os.path.join(args.data_path, 'Problem3/test-100/')
 
     interest_pts = InterestPoints(train_path, H_threshold)
     kmeans = VisualWords(interest_pts, n_clusters=n_clusters, max_iter=max_iter)
@@ -221,12 +228,11 @@ if __name__ == '__main__':
  
 
     ### (d)-(ii) ###
-    output_path = './hw2-3-ii/'
     H_threshold = 400
     n_clusters = 50
     max_iter = 5000
-    train_path = './Problem3/train-100/'
-    test_path = './Problem3/test-100/'
+    train_path = os.path.join(args.data_path, 'Problem3/train-100/')
+    test_path = os.path.join(args.data_path, 'Problem3/test-100/')
 
     interest_pts = InterestPoints(train_path, H_threshold)
     kmeans = VisualWords(interest_pts, n_clusters=n_clusters, max_iter=max_iter)
@@ -265,4 +271,5 @@ if __name__ == '__main__':
     clf_SM.fit(BoW_SM, label_train)
     print(clf_SM.predict(BoW_SM_test))
     test_score = clf_SM.score(BoW_SM_test, label_test)
-print('Soft-Max score: {}'.format(test_score))
+    print('Soft-Max score: {}'.format(test_score))
+
