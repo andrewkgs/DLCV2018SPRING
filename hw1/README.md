@@ -13,5 +13,5 @@ Perform principle component analysis (PCA) and k-nearest neighbors (k-NN) classi
 
 ## Execution Commands
 ```
-python3 hw1.py -d=<hw1 dataset directory> -o=<output directory>
+python3 hw1.py -d <hw1 dataset directory> -o <output directory>
 ```
