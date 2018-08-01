@@ -28,7 +28,7 @@ python3 p3_temporal_action_segmentation.py train -tr <train video directory> -v 
 
 * Test
 ```
-python p1_trimmed_action_recognition.py test -te <test video directory> -tel <test ground truth file> -o <output directory> -on <output file name>
-python p2_trimmed_action_recognition.py test -te <test video directory> -tel <test ground truth file> -o <output directory> -on <output file name>
-python p3_temporal_action_segmentation.py test -te <test video directory> -tel <test ground truth directory> -o <output directory>
+python3 p1_trimmed_action_recognition.py test -te <test video directory> -tel <test ground truth file> -o <output directory> -on <output file name>
+python3 p2_trimmed_action_recognition.py test -te <test video directory> -tel <test ground truth file> -o <output directory> -on <output file name>
+python3 p3_temporal_action_segmentation.py test -te <test video directory> -tel <test ground truth directory> -o <output directory>
 ```
