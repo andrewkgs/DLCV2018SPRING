@@ -4,6 +4,7 @@
 
 
 ## Task Description
+Perform principle component analysis (PCA) and k-nearest neighbors (k-NN) classification on human face images.
 
 
 ## Toolkit requirements
@@ -11,3 +12,6 @@
 
 
 ## Execution Commands
+```
+python3 hw1.py -d=<hw1 dataset directory> -o=<output directory>
+```
