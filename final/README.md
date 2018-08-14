@@ -1,7 +1,7 @@
 # DLCV Final Challenge #1: Object Recognition
 > Course: [Deep Learning for Computer Vision (Spring 2018)](http://vllab.ee.ntu.edu.tw/dlcv.html)\
 > Instructor: Prof. [Yu-Chiang Frank Wang](http://vllab.ee.ntu.edu.tw/members.html)\
-> Final Challenge Slide: [Link](https://docs.google.com/presentation/d/1LlB36DtlCUYu4QeXLNzZctOiLHMoA4HerCoQIrYC-s4/edit?usp=sharing)\
+> Final Challenge Slide: [Link](https://github.com/andrewkgs/DLCV2018SPRING/blob/master/final/Challenge%20%231_%20Object%20Recognition%20(by%20Microsoft).pdf)\
 > Kaggle Competition: [Task 1](https://www.kaggle.com/t/979f5fee9706486a8f61738ce3c76a73) [Task 2](https://www.kaggle.com/t/eebb0cdcbce4453b841e5e2744a8d633)
 
 ## Task Description
