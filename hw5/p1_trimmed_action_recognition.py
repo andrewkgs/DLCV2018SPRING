@@ -3,7 +3,6 @@ from keras.layers import Input, Dense, Dropout
 from keras.models import Model
 from keras.callbacks import Callback, ModelCheckpoint
 import os
-import sys
 import argparse
 import numpy as np
 import random
