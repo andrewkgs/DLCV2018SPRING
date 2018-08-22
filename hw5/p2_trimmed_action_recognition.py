@@ -5,7 +5,6 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.models import Model
 from keras.callbacks import Callback, ModelCheckpoint
 import os
-import sys
 import argparse
 import numpy as np
 import random
